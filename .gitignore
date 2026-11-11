@@ -1,0 +1,9 @@
+.keys/
+node_modules/
+state/
+contract-ft/target/
+contract-gate/target/
+*.log
+
+.env
+.env.*

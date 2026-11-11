@@ -1,0 +1,69 @@
+{
+  "generatedAt": "2026-11-11T18:53:26.122Z",
+  "network": "testnet",
+  "steps": [
+    {
+      "step": "storage",
+      "account": "gate.ritualcoin2026.testnet",
+      "result": "already registered"
+    },
+    {
+      "step": "storage",
+      "account": "gateoff.ritualcoin2026.testnet",
+      "result": "already registered"
+    },
+    {
+      "step": "storage",
+      "account": "alice.ritualcoin2026.testnet",
+      "result": "already registered"
+    },
+    {
+      "step": "storage",
+      "account": "bob.ritualcoin2026.testnet",
+      "result": "already registered"
+    },
+    {
+      "step": "storage",
+      "account": "treasury.ritualcoin2026.testnet",
+      "result": "already registered"
+    },
+    {
+      "step": "fund_alice",
+      "amount": "2000 RITUAL",
+      "tx": "J8XTT22HeeVXuZfK5L7axzMPuoYEp5izzQ18DRCETGPR"
+    },
+    {
+      "step": "ritual_transfer_1",
+      "tx": "edrXqJnkkx1X9YZQs9G2UShVKXWR2meAtANp6SeZmwh",
+      "bobDelta": "9700000000",
+      "pot": "300000000",
+      "count": 1
+    },
+    {
+      "step": "ritual_transfers_2_to_10_and_release",
+      "lastTx": "4h5iiPQrvZq9dv23omSa9RVPAqdQz7uW5vhuaxbtsShA",
+      "releaseTx": "7GkLW11TDdAbnQ7og71co6myhGgEkbQbczFykoDg9Bbp",
+      "armedState": {
+        "pot": "3000000000",
+        "pending": true,
+        "count": 0
+      },
+      "treasuryDelta": "3000000000",
+      "bobTotal": "397700000000",
+      "gateAfter": {
+        "pot": "0",
+        "count": 0,
+        "releases": 3,
+        "pending": false
+      }
+    },
+    {
+      "step": "control_off_window",
+      "tx": "C8ZKeVnRtBENW33ToiKzzkVRBqgYaGparXXfKbThTow5",
+      "aliceDelta": "0",
+      "bobDelta": "0",
+      "gateoffCount": 0,
+      "gateoffPot": "0"
+    }
+  ]
+}

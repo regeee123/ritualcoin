@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-11-11T17:57:34.830Z",
+  "conservation": {
+    "sum": "100000000000000000",
+    "totalSupply": "100000000000000000",
+    "conserved": true
+  },
+  "balances": {
+    "alice": "190000000000",
+    "bob": "203700000000",
+    "treasury": "6000000000"
+  },
+  "releasePotTx": null,
+  "treasuryDeltaBaseUnits": "0",
+  "gateStateAfter": {
+    "ft_contract": "ft.ritualcoin2026.testnet",
+    "treasury": "treasury.ritualcoin2026.testnet",
+    "tax_bps": 300,
+    "target_count": 10,
+    "transfers_count": 0,
+    "pot_yocto": "0",
+    "releases_count": 1,
+    "release_pending": false,
+    "window_start_minute_utc": 960,
+    "window_len_minutes": 240,
+    "ritual_active_now": true,
+    "minutes_until_window_opens": 0
+  },
+  "gateFtBalanceAfter": "300000000"
+}
