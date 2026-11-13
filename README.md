@@ -1,28 +1,92 @@
-# RitualCoin — a memecoin where the meme does something
+# 🕯️ RitualCoin — **RITUAL**
 
-Most memecoins are just a ticker and a chart. **RITUAL** has a mechanic:
-a daily **ritual window** (16:00–20:00 UTC) during which transfers routed
-through the RitualGate contract perform a small on-chain ceremony:
+### A memecoin where the meme *does* something.
 
-- every routed transfer **skims a 3% tax into a community pot** and
-  forwards the remaining 97% to the real recipient;
-- every routed transfer increments a **collective counter**;
-- when the counter reaches **10**, the release is *armed* — and anyone can
-  call `release_pot()` to send the whole pot to the community treasury,
-  on-chain, in public.
+> Most memecoins are a ticker and a chart. RITUAL has a ceremony:
+> every day, for four hours, transfers routed through the RitualGate
+> skim **3% into a community pot** — and when the ritual counter
+> completes, **anyone** can release the whole pot to the community
+> treasury, on-chain, in public.
 
-Outside the window the gate accepts nothing: the full amount is refunded
-to the sender by the standard NEP-141 resolver. The token itself is a
-plain, standard NEP-141 — the mechanic lives entirely in the gate
-contract, so RITUAL stays compatible with every wallet and tool that
-speaks the standard.
+`NEAR testnet` · `NEP-141` · `NEAR HACKATHON — Memecoins With Mechanics track` · `MIT`
 
-Built at **NEAR HACKATHON** (track: Memecoins With Mechanics). Testnet
-only; no real funds anywhere in this repository.
+| | |
+| --- | --- |
+| **Token** | `ft.ritualcoin2026.testnet` |
+| **Gate** | `gate.ritualcoin2026.testnet` |
+| **Ritual window** | Daily, **16:00–20:00 UTC** |
+| **Tax** | 300 bps (3%) → pot · 97% forwarded |
+| **Release** | Counter of 10 → `release_pot()` (permissionless) → treasury |
+| **Supply** | 1,000,000,000 RITUAL · minted once · no mint function |
 
-> Sibling entry (same builder, independent project, disclosed per the
-> hackathon rules): **AgentLeash** — a policy-guarded wallet for AI
-> agents (NEAR HACKATHON, AI Security & Defense track).
+Testnet only — no real funds anywhere in this repository.
+
+---
+
+## How the ritual works
+
+```
+        ┌─────────────────────────────────────────────────┐
+        │   THE WINDOW OPENS — daily, 16:00–20:00 UTC     │
+        └─────────────────────────────────────────────────┘
+                              │
+   1 · SEND      ft_transfer_call the gate, naming your real
+                 recipient in the msg: {"receiver": "<them>"}
+                              │
+   2 · SKIM      the gate takes 3% into the pot and forwards
+                 97% to your recipient — counter ticks +1
+                              │
+   3 · COUNT     at the 10th transfer the release is ARMED
+                 (release_pending = true)
+                              │
+   4 · RELEASE   anyone calls release_pot() → the whole pot
+                 lands in treasury.ritualcoin2026.testnet
+```
+
+**Outside the window, there is no ritual.** The gate accepts nothing:
+the full amount is refunded to the sender by the standard NEP-141
+resolver. No partial fills, no trapped funds — the ceremony happens
+on schedule or not at all.
+
+The token itself is a plain, standard NEP-141. The mechanic lives
+entirely in the gate contract, so RITUAL stays compatible with every
+wallet and tool that speaks the standard.
+
+---
+
+## Proven, not promised
+
+This mechanic is not a whitepaper idea — it ran, twice, end to end on
+NEAR testnet on 2026-11-11 (full record: [`evidence/`](evidence/)):
+
+- **Two full ritual cycles** completed against
+  `gate.ritualcoin2026.testnet`. Per 100 RITUAL transferred: recipient
+  **+97**, pot **+3**, counter **+1**. At the 10th transfer the pot
+  (**30 RITUAL**) was paid to the treasury — twice, so the treasury's
+  settled balance is **60 RITUAL**.
+- **Control check:** a transfer routed through a second gate whose
+  window was shut (`gateoff.ritualcoin2026.testnet`, 03:00–04:00 UTC)
+  was **refunded in full** — sender and recipient deltas 0.
+- **Supply conserved, exactly.** Settled-state verification
+  (`node scripts/final-verify.js`, run twice, identical results):
+
+  | Account | RITUAL |
+  | --- | ---: |
+  | owner | 999,996,000 |
+  | alice (demo user) | 1,900 |
+  | bob (recipient) | 2,037 (= 21 forwards × 97) |
+  | treasury | 60 (= 2 releases × 30) |
+  | gate | 3 (dust — see `evidence/VERIFICATION.md`) |
+  | gateoff | 0 |
+  | **sum = total supply** | **1,000,000,000 ✓** |
+
+The verification notes also document the honest mess: the v1 gate paid
+the pot inside the transfer callback and tripped a sender-protection
+assertion in `near-contract-standards`. The fix — arm the release in
+the callback, pay it in a separate permissionless call — is the
+pattern this code now uses, and cycle 2 ran clean on it.
+
+---
 
 ## Live deployment (NEAR testnet)
 
@@ -38,6 +102,10 @@ Token facts: name **RitualCoin**, symbol **RITUAL**, 8 decimals, total
 supply 1,000,000,000 RITUAL (minted once at init to the owner account —
 there is no mint function). Gate parameters: tax 300 bps (3%), counter
 target 10 transfers, pot → treasury.
+
+A static overview page lives at [`docs/index.html`](docs/index.html).
+
+---
 
 ## Try it — do X, see Y
 
@@ -64,27 +132,7 @@ setup steps or provide its own testnet accounts).
    `msg` = `{"receiver": "<final recipient>"}` — during the window your
    transfer joins the ritual; outside it, you are refunded in full.
 
-## How it works
-
-```
-ft_transfer_call(gate, amount, msg={receiver})
-        │
-        ▼
-RitualGate.ft_on_transfer
-  ├─ window closed → return full amount (NEP-141 refund to sender)
-  └─ window open → tax 3% to pot, forward 97% to receiver, counter += 1
-        counter reaches 10 → release armed
-release_pot() (anyone) → whole pot to treasury
-```
-
-One hard-won implementation note: the pot is **not** paid out inside
-`ft_on_transfer`. The standard resolver (`ft_resolve_transfer` in
-near-contract-standards) protects senders by asserting the receiver's
-token balance does not drop during the callback — paying out *previous*
-transfers' taxes in the same callback trips that guard (we hit it:
-`assertion failed ... yields possible loss of tokens`). Arming the
-release in the callback and paying it in a separate, permissionless call
-is the correct pattern.
+---
 
 ## Built with
 
@@ -95,6 +143,10 @@ is the correct pattern.
 - **Gate:** original Rust (near-sdk 5), `contract-gate/`. Scripts in
   near-api-js 7; accounts via near-cli-rs faucet. Window per the rules:
   code written for this hackathon (post-2026-10-19 announcement counts).
+
+> Sibling entry (same builder, independent project, disclosed per the
+> hackathon rules): **AgentLeash** — a policy-guarded wallet for AI
+> agents (NEAR HACKATHON, AI Security & Defense track).
 
 ## License
 

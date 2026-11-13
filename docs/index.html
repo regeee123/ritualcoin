@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RitualCoin (RITUAL) — a memecoin where the meme does something</title>
+<meta name="description" content="RITUAL is a NEAR testnet memecoin with a daily ritual: transfers through the RitualGate skim 3% into a community pot, released to the treasury when the counter completes. Proven on-chain over two full cycles, supply conserved exactly.">
+<style>
+  :root{
+    --bg:#0d0b09;
+    --bg2:#14100c;
+    --panel:#171310;
+    --line:#2b2118;
+    --cream:#f5ead9;
+    --dim:#b8a88f;
+    --faint:#7d6f5a;
+    --ember:#ffa028;
+    --ember-deep:#ff7847;
+    --mint:#6ee7b7;
+    --serif:Georgia,"Iowan Old Style","Times New Roman",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(900px 480px at 50% -120px, rgba(255,160,40,.14), rgba(255,160,40,0) 60%),
+      var(--bg);
+    color:var(--cream);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:0 24px}
+  a{color:var(--ember);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* ---------- hero ---------- */
+  header{padding:84px 0 56px;text-align:center}
+  .flame{font-size:44px;line-height:1;filter:drop-shadow(0 0 22px rgba(255,160,40,.55))}
+  .wordmark{
+    font-family:var(--serif);
+    font-size:clamp(64px,14vw,124px);
+    letter-spacing:.14em;
+    line-height:1.05;
+    margin:14px 0 4px;
+    background:linear-gradient(180deg,#ffe9c4 20%,var(--ember) 78%,var(--ember-deep));
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;color:var(--ember);
+  }
+  .coin-name{font-family:var(--mono);letter-spacing:.34em;text-transform:uppercase;color:var(--dim);font-size:13px}
+  .pitch{
+    font-family:var(--serif);font-style:italic;
+    font-size:clamp(20px,3.4vw,27px);line-height:1.45;
+    max-width:640px;margin:30px auto 0;color:var(--cream);
+  }
+  .pitch strong{color:var(--ember);font-style:normal}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:30px 0 6px}
+  .chip{
+    font-family:var(--mono);font-size:12px;letter-spacing:.06em;
+    border:1px solid var(--line);border-radius:999px;padding:5px 13px;color:var(--dim);
+    background:rgba(255,255,255,.02);
+  }
+  .chip.hot{color:#14100c;background:var(--ember);border-color:var(--ember);font-weight:700}
+  .chip.proof{color:var(--mint);border-color:rgba(110,231,183,.35)}
+
+  /* ---------- copy blocks ---------- */
+  .addr{
+    display:flex;align-items:stretch;gap:0;margin:14px auto 0;max-width:620px;
+    border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg2);
+    text-align:left;
+  }
+  .addr .who{
+    font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--faint);padding:12px 0 0 16px;position:absolute;
+  }
+  .addr code{
+    flex:1;font-family:var(--mono);font-size:14.5px;color:var(--cream);
+    padding:30px 16px 12px;word-break:break-all;line-height:1.4;
+  }
+  .addr button{
+    font-family:var(--mono);font-size:12px;letter-spacing:.05em;cursor:pointer;
+    background:transparent;color:var(--ember);border:0;border-left:1px solid var(--line);
+    padding:0 18px;min-width:86px;
+  }
+  .addr button:hover{background:rgba(255,160,40,.08)}
+  .addr-wrap{position:relative;max-width:620px;margin:0 auto}
+  .statusline{font-family:var(--mono);font-size:13px;color:var(--dim);margin-top:22px}
+  .statusline b{color:var(--mint);font-weight:600}
+  .statusline .open{color:var(--ember)}
+
+  /* ---------- sections ---------- */
+  section{padding:58px 0;border-top:1px solid var(--line)}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--ember);text-align:center}
+  h2{font-family:var(--serif);font-size:clamp(30px,5vw,42px);font-weight:600;text-align:center;margin:12px 0 8px}
+  .sub{text-align:center;color:var(--dim);max-width:600px;margin:0 auto 36px;font-size:16.5px}
+
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media (max-width:760px){.steps{grid-template-columns:1fr 1fr}}
+  @media (max-width:460px){.steps{grid-template-columns:1fr}}
+  .step{
+    background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px 18px;
+  }
+  .step .n{font-family:var(--serif);font-size:30px;color:var(--ember);line-height:1}
+  .step h3{font-size:15px;letter-spacing:.12em;text-transform:uppercase;margin:12px 0 8px;font-family:var(--mono);font-weight:600}
+  .step p{font-size:14.5px;color:var(--dim)}
+  .step p b{color:var(--cream)}
+
+  .splitbar{margin:38px auto 0;max-width:680px}
+  .splitbar .bar{display:flex;height:46px;border-radius:9px;overflow:hidden;border:1px solid var(--line)}
+  .splitbar .fwd{width:97%;background:linear-gradient(90deg,#3d2c17,#54401f);display:flex;align-items:center;padding:0 16px;font-family:var(--mono);font-size:13px;color:var(--cream)}
+  .splitbar .pot{width:3%;min-width:64px;background:var(--ember);color:#171106;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:700}
+  .splitbar .cap{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--faint);margin-top:8px}
+
+  /* ---------- proof ---------- */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:30px}
+  @media (max-width:760px){.stats{grid-template-columns:1fr 1fr}}
+  .stat{text-align:center;padding:24px 10px;border:1px solid rgba(110,231,183,.25);border-radius:12px;background:rgba(110,231,183,.03)}
+  .stat .big{font-family:var(--serif);font-size:clamp(28px,4.6vw,40px);color:var(--mint);line-height:1.1}
+  .stat .lbl{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-top:8px}
+  table{width:100%;border-collapse:collapse;font-size:15px;margin:6px 0 4px}
+  th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left}
+  th{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+  td.num,th.num{text-align:right;font-family:var(--mono);font-size:14px}
+  tr.total td{border-bottom:0;border-top:2px solid rgba(110,231,183,.4);font-weight:700;color:var(--mint)}
+  .note{font-size:14px;color:var(--dim);margin-top:18px}
+  .note b{color:var(--cream)}
+
+  .darkgate{
+    border:1px dashed var(--line);border-radius:12px;padding:26px 28px;text-align:center;background:rgba(255,255,255,.015);
+  }
+  .darkgate .big{font-family:var(--serif);font-size:24px;margin-bottom:6px}
+  .darkgate p{color:var(--dim);font-size:15px;max-width:560px;margin:0 auto}
+
+  .addrs{display:grid;gap:12px;max-width:680px;margin:0 auto}
+  .addrs .addr{margin:0;max-width:none}
+  .addrs .addr-wrap{max-width:none}
+
+  footer{border-top:1px solid var(--line);padding:40px 0 56px;text-align:center;color:var(--faint);font-size:13.5px}
+  footer .row{margin:5px 0}
+  footer .mono{font-family:var(--mono);font-size:12.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="flame" aria-hidden="true">🕯️</div>
+    <div class="wordmark">RITUAL</div>
+    <div class="coin-name">RitualCoin · NEAR Testnet</div>
+    <p class="pitch">A memecoin where the meme <strong>does something</strong>: every day,
+      for four hours, transfers join a ceremony — <strong>3% to the pot</strong>,
+      97% to your friend — and when the counter completes, the pot is released
+      to the community treasury. On-chain. In public. By anyone.</p>
+
+    <div class="chips">
+      <span class="chip hot">Daily window · 16:00–20:00 UTC</span>
+      <span class="chip">NEP-141 token</span>
+      <span class="chip">Tax 300 bps</span>
+      <span class="chip proof">✓ 2 cycles proven on testnet</span>
+      <span class="chip proof">✓ Supply conserved exactly</span>
+    </div>
+
+    <div class="addr-wrap">
+      <div class="addr">
+        <span class="who">Token contract</span>
+        <code id="token-addr">ft.ritualcoin2026.testnet</code>
+        <button type="button" data-copy="token-addr">COPY</button>
+      </div>
+    </div>
+
+    <p class="statusline" id="window-status">The ritual window opens daily at 16:00 UTC.</p>
+  </header>
+
+  <section id="ritual">
+    <div class="kicker">The Ceremony</div>
+    <h2>How the ritual works</h2>
+    <p class="sub">Four steps, one gate contract. The token stays a plain
+      NEP-141 — the magic lives in the gate, so every wallet and tool
+      keeps working.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="n">1</div>
+        <h3>The window</h3>
+        <p>Every day, <b>16:00–20:00 UTC</b>, the RitualGate wakes up.
+          Outside those hours it accepts nothing at all.</p>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <h3>The offering</h3>
+        <p>You send RITUAL through the gate, naming your real recipient.
+          <b>97% arrives</b> — <b>3% stays</b> in the community pot.
+          The counter ticks up by one.</p>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <h3>The count</h3>
+        <p>Ten offerings complete the count. At the <b>10th transfer</b>
+          the release is armed — <b>30 RITUAL</b> waiting in the pot
+          of a full cycle.</p>
+      </div>
+      <div class="step">
+        <div class="n">4</div>
+        <h3>The release</h3>
+        <p><b>Anyone</b> calls <b>release_pot()</b> and the whole pot
+          lands in the community treasury. No keys, no admin, no trust —
+          just the count.</p>
+      </div>
+    </div>
+
+    <div class="splitbar" aria-hidden="true">
+      <div class="bar">
+        <div class="fwd">97% → your recipient</div>
+        <div class="pot">3%</div>
+      </div>
+      <div class="cap"><span>every routed transfer, split by the gate</span><span>→ the pot</span></div>
+    </div>
+  </section>
+
+  <section id="proof">
+    <div class="kicker" style="color:var(--mint)">Proof, not promises</div>
+    <h2>It already ran. Twice.</h2>
+    <p class="sub">The full mechanic executed end-to-end on NEAR testnet
+      on 2026-11-11 — two complete cycles — and the settled balances were
+      verified twice with identical results.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="big">2</div><div class="lbl">Full ritual cycles</div></div>
+      <div class="stat"><div class="big">30</div><div class="lbl">RITUAL per release</div></div>
+      <div class="stat"><div class="big">60</div><div class="lbl">RITUAL in treasury</div></div>
+      <div class="stat"><div class="big">1,000,000,000</div><div class="lbl">Supply — conserved ✓</div></div>
+    </div>
+
+    <table>
+      <tr><th>Account (settled)</th><th class="num">RITUAL</th></tr>
+      <tr><td>Owner</td><td class="num">999,996,000</td></tr>
+      <tr><td>Alice — demo user</td><td class="num">1,900</td></tr>
+      <tr><td>Bob — recipient (21 forwards × 97)</td><td class="num">2,037</td></tr>
+      <tr><td>Treasury (2 releases × 30)</td><td class="num">60</td></tr>
+      <tr><td>Gate (dust — documented in the evidence)</td><td class="num">3</td></tr>
+      <tr><td>Control gate</td><td class="num">0</td></tr>
+      <tr class="total"><td>Sum = total supply</td><td class="num">1,000,000,000 ✓</td></tr>
+    </table>
+
+    <p class="note">Every step, with transaction hashes, is in the repo:
+      <b>evidence/ritual-proof.json</b> and <b>evidence/VERIFICATION.md</b> —
+      including the v1 bug (paying the pot inside the transfer callback
+      trips a sender-protection guard in near-contract-standards) and the
+      fix this code ships: the callback only <b>arms</b> the release;
+      a separate permissionless call pays it.</p>
+  </section>
+
+  <section id="dark">
+    <div class="kicker">No window, no ritual</div>
+    <h2>Miss the window? Full refund.</h2>
+    <div class="darkgate">
+      <div class="big">🕯️ …the candle is out.</div>
+      <p>Send while the gate is dark and the standard NEP-141 resolver
+        hands you back <b style="color:var(--cream)">every last token</b> —
+        proven with a second, deliberately dark gate: sender and recipient
+        balances unchanged, counter untouched at zero.</p>
+    </div>
+  </section>
+
+  <section id="addresses">
+    <div class="kicker">On-chain</div>
+    <h2>The addresses</h2>
+    <p class="sub">All on NEAR testnet. Tap copy, paste anywhere.</p>
+    <div class="addrs">
+      <div class="addr-wrap"><div class="addr">
+        <span class="who">Token · RITUAL · 8 decimals</span>
+        <code id="a-token">ft.ritualcoin2026.testnet</code>
+        <button type="button" data-copy="a-token">COPY</button>
+      </div></div>
+      <div class="addr-wrap"><div class="addr">
+        <span class="who">RitualGate · window 16:00–20:00 UTC</span>
+        <code id="a-gate">gate.ritualcoin2026.testnet</code>
+        <button type="button" data-copy="a-gate">COPY</button>
+      </div></div>
+      <div class="addr-wrap"><div class="addr">
+        <span class="who">Control gate · window 03:00–04:00 UTC</span>
+        <code id="a-gateoff">gateoff.ritualcoin2026.testnet</code>
+        <button type="button" data-copy="a-gateoff">COPY</button>
+      </div></div>
+      <div class="addr-wrap"><div class="addr">
+        <span class="who">Community treasury</span>
+        <code id="a-treasury">treasury.ritualcoin2026.testnet</code>
+        <button type="button" data-copy="a-treasury">COPY</button>
+      </div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="row">Built at <b style="color:var(--dim)">NEAR HACKATHON</b> — Memecoins With Mechanics track.</div>
+    <div class="row">Testnet only. No real funds, no promises — just a ritual that verifiably happened.</div>
+    <div class="row mono">
+      <a href="https://github.com/regeee123/ritualcoin">github.com/regeee123/ritualcoin</a>
+      · MIT License
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // Copy buttons (progressive enhancement — addresses stay selectable without JS)
+  document.querySelectorAll('button[data-copy]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var el = document.getElementById(btn.getAttribute('data-copy'));
+      var text = el ? el.textContent.trim() : '';
+      function done() {
+        var old = btn.textContent;
+        btn.textContent = 'COPIED ✓';
+        setTimeout(function () { btn.textContent = old; }, 1600);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, done);
+      } else {
+        var r = document.createRange(); r.selectNodeContents(el);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        try { document.execCommand('copy'); } catch (e) {}
+        done();
+      }
+    });
+  });
+
+  // Ritual window status: opens daily 16:00 UTC, lasts 4 hours (gate parameters)
+  (function () {
+    var el = document.getElementById('window-status');
+    if (!el) return;
+    function tick() {
+      var now = new Date();
+      var mins = now.getUTCHours() * 60 + now.getUTCMinutes();
+      var open = 16 * 60, close = 20 * 60;
+      if (mins >= open && mins < close) {
+        var left = close - mins;
+        el.innerHTML = '<span class="open">🕯️ The window is open now</span> — it closes in ' +
+          Math.floor(left / 60) + 'h ' + (left % 60) + 'm (20:00 UTC).';
+      } else {
+        var until = mins < open ? open - mins : 24 * 60 - mins + open;
+        el.innerHTML = 'Next ritual window opens in <b>' +
+          Math.floor(until / 60) + 'h ' + (until % 60) + 'm</b> — daily, 16:00–20:00 UTC.';
+      }
+    }
+    tick();
+    setInterval(tick, 30000);
+  })();
+</script>
+</body>
+</html>
