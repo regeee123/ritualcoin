@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RitualCoin (RITUAL) — a memecoin where the meme does something</title>
-<meta name="description" content="RITUAL is a NEAR testnet memecoin with a daily ritual: transfers through the RitualGate skim 3% into a community pot, released to the treasury when the counter completes. Proven on-chain over two full cycles, supply conserved exactly.">
+<title>RitualCoin (RITUAL) — the memecoin with an actual ceremony</title>
+<meta name="description" content="RITUAL is a NEAR testnet memecoin with a daily ritual (yes, an actual daily ritual): transfers through the RitualGate skim 3% into a community pot, released to the treasury when the counter completes. Proven on-chain over two full cycles, supply conserved exactly.">
 <style>
   :root{
     --bg:#0d0b09;
@@ -149,10 +149,11 @@
     <div class="flame" aria-hidden="true">🕯️</div>
     <div class="wordmark">RITUAL</div>
     <div class="coin-name">RitualCoin · NEAR Testnet</div>
-    <p class="pitch">A memecoin where the meme <strong>does something</strong>: every day,
-      for four hours, transfers join a ceremony — <strong>3% to the pot</strong>,
-      97% to your friend — and when the counter completes, the pot is released
-      to the community treasury. On-chain. In public. By anyone.</p>
+    <p class="pitch">Most memecoins are a vibe and a prayer. This one has a
+      <strong>ceremony</strong>: every day, for four hours, transfers join the
+      ritual — <strong>3% to the pot</strong>, 97% to your friend — and when
+      the counter completes, the pot is released to the community treasury.
+      On-chain. In public. By anyone. No priesthood required.</p>
 
     <div class="chips">
       <span class="chip hot">Daily window · 16:00–20:00 UTC</span>
@@ -174,39 +175,40 @@
   </header>
 
   <section id="ritual">
-    <div class="kicker">The Ceremony</div>
-    <h2>How the ritual works</h2>
-    <p class="sub">Four steps, one gate contract. The token stays a plain
-      NEP-141 — the magic lives in the gate, so every wallet and tool
-      keeps working.</p>
+    <div class="kicker">The Ceremony (Yes, Really)</div>
+    <h2>The ritual, in four easy steps</h2>
+    <p class="sub">One gate contract, zero high priests. The token stays a
+      plain NEP-141 — the magic lives in the gate, so every wallet and tool
+      keeps working. Bring your own candle.</p>
 
     <div class="steps">
       <div class="step">
         <div class="n">1</div>
         <h3>The window</h3>
-        <p>Every day, <b>16:00–20:00 UTC</b>, the RitualGate wakes up.
-          Outside those hours it accepts nothing at all.</p>
+        <p>Every day, <b>16:00–20:00 UTC</b>, the RitualGate wakes up and
+          lights the candle. Outside those hours? It accepts nothing at
+          all. Not a crumb. Not a vibe.</p>
       </div>
       <div class="step">
         <div class="n">2</div>
         <h3>The offering</h3>
         <p>You send RITUAL through the gate, naming your real recipient.
           <b>97% arrives</b> — <b>3% stays</b> in the community pot.
-          The counter ticks up by one.</p>
+          A tithe, but make it on-chain. The counter ticks up by one.</p>
       </div>
       <div class="step">
         <div class="n">3</div>
         <h3>The count</h3>
         <p>Ten offerings complete the count. At the <b>10th transfer</b>
-          the release is armed — <b>30 RITUAL</b> waiting in the pot
-          of a full cycle.</p>
+          the release is armed — <b>30 RITUAL</b> sitting in the pot of
+          a full cycle, patiently glowing.</p>
       </div>
       <div class="step">
         <div class="n">4</div>
         <h3>The release</h3>
         <p><b>Anyone</b> calls <b>release_pot()</b> and the whole pot
           lands in the community treasury. No keys, no admin, no trust —
-          just the count.</p>
+          just the count. Democracy, but for pot release.</p>
       </div>
     </div>
 
@@ -215,7 +217,7 @@
         <div class="fwd">97% → your recipient</div>
         <div class="pot">3%</div>
       </div>
-      <div class="cap"><span>every routed transfer, split by the gate</span><span>→ the pot</span></div>
+      <div class="cap"><span>every routed transfer pays the tithe — split by the gate, no exceptions</span><span>→ the pot</span></div>
     </div>
   </section>
 
@@ -224,7 +226,8 @@
     <h2>It already ran. Twice.</h2>
     <p class="sub">The full mechanic executed end-to-end on NEAR testnet
       on 2026-11-11 — two complete cycles — and the settled balances were
-      verified twice with identical results.</p>
+      verified twice with identical results. Receipts or it didn't
+      happen: the receipts are the table below.</p>
 
     <div class="stats">
       <div class="stat"><div class="big">2</div><div class="lbl">Full ritual cycles</div></div>
@@ -249,7 +252,8 @@
       including the v1 bug (paying the pot inside the transfer callback
       trips a sender-protection guard in near-contract-standards) and the
       fix this code ships: the callback only <b>arms</b> the release;
-      a separate permissionless call pays it.</p>
+      a separate permissionless call pays it. Most memecoins hide their
+      bugs — ours come with documentation and a fix.</p>
   </section>
 
   <section id="dark">
@@ -259,15 +263,17 @@
       <div class="big">🕯️ …the candle is out.</div>
       <p>Send while the gate is dark and the standard NEP-141 resolver
         hands you back <b style="color:var(--cream)">every last token</b> —
-        proven with a second, deliberately dark gate: sender and recipient
-        balances unchanged, counter untouched at zero.</p>
+        no hard feelings, no partial fills. Proven with a second,
+        deliberately dark gate: sender and recipient balances unchanged,
+        counter untouched at zero. Even our "no" is on-chain.</p>
     </div>
   </section>
 
   <section id="addresses">
     <div class="kicker">On-chain</div>
-    <h2>The addresses</h2>
-    <p class="sub">All on NEAR testnet. Tap copy, paste anywhere.</p>
+    <h2>The sacred addresses</h2>
+    <p class="sub">All on NEAR testnet. Tap copy, paste anywhere. Handle
+      with reverence — or just paste them into a wallet, that works too.</p>
     <div class="addrs">
       <div class="addr-wrap"><div class="addr">
         <span class="who">Token · RITUAL · 8 decimals</span>
@@ -294,7 +300,7 @@
 
   <footer>
     <div class="row">Built at <b style="color:var(--dim)">NEAR HACKATHON</b> — Memecoins With Mechanics track.</div>
-    <div class="row">Testnet only. No real funds, no promises — just a ritual that verifiably happened.</div>
+    <div class="row">Testnet only. No real funds, no moon promises — just a ritual that verifiably happened. Twice. 🕯️</div>
     <div class="row mono">
       <a href="https://github.com/regeee123/ritualcoin">github.com/regeee123/ritualcoin</a>
       · MIT License
@@ -311,7 +317,7 @@
       var text = el ? el.textContent.trim() : '';
       function done() {
         var old = btn.textContent;
-        btn.textContent = 'COPIED ✓';
+        btn.textContent = 'COPIED 🕯️';
         setTimeout(function () { btn.textContent = old; }, 1600);
       }
       if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -335,11 +341,11 @@
       var open = 16 * 60, close = 20 * 60;
       if (mins >= open && mins < close) {
         var left = close - mins;
-        el.innerHTML = '<span class="open">🕯️ The window is open now</span> — it closes in ' +
+        el.innerHTML = '<span class="open">🕯️ The candle is LIT — the window is open</span> — it closes in ' +
           Math.floor(left / 60) + 'h ' + (left % 60) + 'm (20:00 UTC).';
       } else {
         var until = mins < open ? open - mins : 24 * 60 - mins + open;
-        el.innerHTML = 'Next ritual window opens in <b>' +
+        el.innerHTML = '🕯️ …the candle is out. Next ritual window opens in <b>' +
           Math.floor(until / 60) + 'h ' + (until % 60) + 'm</b> — daily, 16:00–20:00 UTC.';
       }
     }

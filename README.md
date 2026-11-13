@@ -1,12 +1,13 @@
 # 🕯️ RitualCoin — **RITUAL**
 
-### A memecoin where the meme *does* something.
+### A memecoin where the meme *does* something. Like, literally. On-chain. Every day.
 
-> Most memecoins are a ticker and a chart. RITUAL has a ceremony:
-> every day, for four hours, transfers routed through the RitualGate
-> skim **3% into a community pot** — and when the ritual counter
-> completes, **anyone** can release the whole pot to the community
-> treasury, on-chain, in public.
+> Most memecoins are a ticker, a chart, and a prayer. RITUAL has a
+> ceremony: every day, for four hours, transfers routed through the
+> RitualGate skim **3% into a community pot** — and when the ritual
+> counter completes, **anyone** can release the whole pot to the
+> community treasury, on-chain, in public. No priesthood required.
+> Just a counter and a candle. 🕯️
 
 `NEAR testnet` · `NEP-141` · `NEAR HACKATHON — Memecoins With Mechanics track` · `MIT`
 
@@ -19,11 +20,12 @@
 | **Release** | Counter of 10 → `release_pot()` (permissionless) → treasury |
 | **Supply** | 1,000,000,000 RITUAL · minted once · no mint function |
 
-Testnet only — no real funds anywhere in this repository.
+Testnet only — no real funds anywhere in this repository. The only
+thing at stake is the candle wax.
 
 ---
 
-## How the ritual works
+## How the ritual works (the sacred rites)
 
 ```
         ┌─────────────────────────────────────────────────┐
@@ -43,21 +45,24 @@ Testnet only — no real funds anywhere in this repository.
                  lands in treasury.ritualcoin2026.testnet
 ```
 
-**Outside the window, there is no ritual.** The gate accepts nothing:
-the full amount is refunded to the sender by the standard NEP-141
-resolver. No partial fills, no trapped funds — the ceremony happens
-on schedule or not at all.
+**Outside the window, there is no ritual.** The gate isn't being
+rude, it's being punctual: it accepts nothing, and the full amount
+is refunded to the sender by the standard NEP-141 resolver. No
+partial fills, no trapped funds — the ceremony happens on schedule
+or not at all. The candle keeps office hours.
 
-The token itself is a plain, standard NEP-141. The mechanic lives
-entirely in the gate contract, so RITUAL stays compatible with every
-wallet and tool that speaks the standard.
+The token itself is a plain, standard NEP-141 — boring on purpose
+(that's a compliment in token design). All the drama lives in the
+gate contract, so RITUAL stays compatible with every wallet and
+tool that speaks the standard.
 
 ---
 
 ## Proven, not promised
 
 This mechanic is not a whitepaper idea — it ran, twice, end to end on
-NEAR testnet on 2026-11-11 (full record: [`evidence/`](evidence/)):
+NEAR testnet on 2026-11-11. Receipts, not vibes (full record:
+[`evidence/`](evidence/)):
 
 - **Two full ritual cycles** completed against
   `gate.ritualcoin2026.testnet`. Per 100 RITUAL transferred: recipient
@@ -66,7 +71,8 @@ NEAR testnet on 2026-11-11 (full record: [`evidence/`](evidence/)):
   settled balance is **60 RITUAL**.
 - **Control check:** a transfer routed through a second gate whose
   window was shut (`gateoff.ritualcoin2026.testnet`, 03:00–04:00 UTC)
-  was **refunded in full** — sender and recipient deltas 0.
+  was **refunded in full** — sender and recipient deltas 0. Even the
+  darkness around here has been tested.
 - **Supply conserved, exactly.** Settled-state verification
   (`node scripts/final-verify.js`, run twice, identical results):
 
@@ -80,7 +86,8 @@ NEAR testnet on 2026-11-11 (full record: [`evidence/`](evidence/)):
   | gateoff | 0 |
   | **sum = total supply** | **1,000,000,000 ✓** |
 
-The verification notes also document the honest mess: the v1 gate paid
+The verification notes also document the honest mess (most memecoins
+hide their bugs; ours are documented, with names): the v1 gate paid
 the pot inside the transfer callback and tripped a sender-protection
 assertion in `near-contract-standards`. The fix — arm the release in
 the callback, pay it in a separate permissionless call — is the
@@ -103,11 +110,12 @@ supply 1,000,000,000 RITUAL (minted once at init to the owner account —
 there is no mint function). Gate parameters: tax 300 bps (3%), counter
 target 10 transfers, pot → treasury.
 
-A static overview page lives at [`docs/index.html`](docs/index.html).
+A static overview page — the temple tour, no ticket required — lives
+at [`docs/index.html`](docs/index.html).
 
 ---
 
-## Try it — do X, see Y
+## Try it — do X, see Y (no initiation required)
 
 Prerequisites: Node.js 20+, `npm install` in this directory. The demo keys
 in `.keys/` are testnet throwaways (gitignored; a fresh clone must run the
